@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Calculadora estimativa de ITBI de São José dos Campos - SP.">
+  <title>Calculadora ITBI — São José dos Campos</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js"defer></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <span class="eyebrow">VALE FINANCEIRA • SIMULADOR</span>
+      <h1>Calculadora de ITBI</h1>
+      <p>São José dos Campos — SP</p>
+    </div>
+  </header>
+
+  <main class="container layout">
+    <section class="card form-card">
+      <div class="section-title">
+        <div>
+          <span class="step">01</span>
+          <h2>Dados do imóvel</h2>
+        </div>
+        <span class="badge">2026</span>
+      </div>
+
+      <div class="field">
+        <label for="valorCompra">Valor da negociação</label>
+        <div class="input-money">
+          <span>R$</span>
+          <input id="valorCompra" inputmode="decimal" placeholder="0,00" autocomplete="off">
+        </div>
+        <small>Informe o valor efetivamente pago pelo imóvel.</small>
+      </div>
+
+      <div class="field">
+        <label>Você possui o valor de referência da Prefeitura?</label>
+        <div class="segmented">
+          <label class="choice">
+            <input type="radio" name="temReferencia" value="nao" checked>
+            <span>Não</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="temReferencia" value="sim">
+            <span>Sim</span>
+          </label>
+        </div>
+        <small>Se não souber, deixe em "Não" — fazemos a estimativa pelo valor da negociação.</small>
+      </div>
+
+      <div class="field hidden" id="referenciaBox">
+        <label for="valorReferencia">Valor de referência da Prefeitura</label>
+        <div class="input-money">
+          <span>R$</span>
+          <input id="valorReferencia" inputmode="decimal" placeholder="0,00" autocomplete="off">
+        </div>
+        <small>Valor de referência informado pela Prefeitura para o imóvel (Planta Genérica de Valores).</small>
+      </div>
+
+      <div class="field">
+        <label>Condição do comprador</label>
+        <div class="segmented">
+          <label class="choice">
+            <input type="radio" name="primeiroImovel" value="sim" checked>
+            <span>Primeiro imóvel</span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="primeiroImovel" value="nao">
+            <span>Segundo ou mais</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="sistema">Modalidade da operação</label>
+        <select id="sistema">
+          <option value="avista">À vista / sem financiamento</option>
+          <option value="sfh">Financiamento — SFH</option>
+          <option value="sfi">Financiamento — SFI</option>
+        </select>
+        <small>Na regra municipal consultada, a redução para a parte financiada é prevista para operações enquadradas no SFH.</small>
+      </div>
+
+      <div class="field hidden" id="financiamentoBox">
+        <label for="valorFinanciado">Valor financiado</label>
+        <div class="input-money">
+          <span>R$</span>
+          <input id="valorFinanciado" inputmode="decimal" placeholder="0,00" autocomplete="off">
+        </div>
+        <small>Informe somente o valor efetivamente concedido pela instituição financeira para pagamento do imóvel. Não inclua FGTS, tributos, custas ou emolumentos.</small>
+      </div>
+
+      <button id="calcular" class="btn-primary">Calcular ITBI</button>
+      <button id="limpar" class="btn-secondary">Limpar</button>
+    </section>
+
+    <section class="card result-card" id="resultado" aria-live="polite">
+      <div class="result-placeholder">
+        <div class="result-icon">R$</div>
+        <h2>Seu resultado aparecerá aqui</h2>
+        <p>Preencha os dados ao lado e clique em <strong>Calcular ITBI</strong>.</p>
+      </div>
+    </section>
+
+    <section class="card info-card">
+      <h2>Como o cálculo funciona</h2>
+      <div class="rules">
+        <article>
+          <span>01</span>
+          <div>
+            <h3>Base de cálculo</h3>
+            <p>A base de cálculo é o maior valor entre o valor da negociação e o valor de referência da Planta Genérica de Valores, conforme a regra apresentada pela Prefeitura. Se você não informar o valor de referência, a estimativa é calculada apenas sobre o valor da negociação — o valor oficial pode ser maior caso a Prefeitura utilize uma referência superior.</p>
+          </div>
+        </article>
+        <article>
+          <span>02</span>
+          <div>
+            <h3>Regra geral</h3>
+            <p>A alíquota geral é de <strong>2%</strong>.</p>
+          </div>
+        </article>
+        <article>
+          <span>03</span>
+          <div>
+            <h3>Primeiro imóvel</h3>
+            <p>Para adquirente que não seja proprietário de outro imóvel, a regra municipal prevê <strong>0,5%</strong> para transmissão ou cessão de imóvel com valor de até <strong>R$ 147.000,00</strong>.</p>
+          </div>
+        </article>
+        <article>
+          <span>04</span>
+          <div>
+            <h3>SFH</h3>
+            <p>Em financiamento enquadrado no Sistema Financeiro da Habitação, a Prefeitura informa <strong>0,5%</strong> sobre a parte financiada e <strong>2%</strong> sobre a parte não financiada.</p>
+          </div>
+        </article>
+        <article>
+          <span>05</span>
+          <div>
+            <h3>SFI</h3>
+            <p>A página oficial consultada não estende a redução do SFH ao SFI. Por isso, nesta calculadora o SFI é estimado pela alíquota geral de <strong>2%</strong> sobre a base.</p>
+          </div>
+        </article>
+      </div>
+      <div class="notice">
+        <strong>Importante:</strong> esta é uma calculadora estimativa. A guia oficial emitida pela Prefeitura é a referência para o recolhimento do imposto. Regras, valores e índices podem ser alterados por legislação ou atualização municipal.
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Calculadora estimativa de ITBI • São José dos Campos/SP</p>
+      <p>Base normativa informada pela Prefeitura: Lei Complementar nº 383/2009 e regulamentação municipal.</p>
+    </div>
+  </footer>
+
+  
+</body>
+</html>
