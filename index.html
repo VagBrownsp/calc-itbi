@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Calculadora estimativa de ITBI de São José dos Campos - SP.">
-  <title>Calculadora ITBI — São José dos Campos</title>
+  <meta name="description" content="Calculadora estimativa de ITBI e Registro de Imóveis de São José dos Campos - SP.">
+  <title>Calculadora ITBI e Registro — São José dos Campos</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js"defer></script>
 </head>
@@ -12,7 +12,7 @@
   <header class="hero">
     <div class="container">
       <span class="eyebrow">VAGNER BARBOSA • SIMULADOR</span>
-      <h1>Calculadora de ITBI</h1>
+      <h1>Calculadora de ITBI e Registro</h1>
       <p>São José dos Campos — SP</p>
     </div>
   </header>
@@ -26,6 +26,7 @@
         </div>
         <span class="badge">2026</span>
       </div>
+      <p class="hint-block">Os dados abaixo são usados para estimar tanto o <strong>ITBI</strong> (Prefeitura) quanto o <strong>Registro do imóvel</strong> (Cartório de Registro de Imóveis).</p>
 
       <div class="field">
         <label for="valorCompra">Valor da negociação</label>
@@ -60,7 +61,7 @@
         <small>Valor de referência informado pela Prefeitura para o imóvel (Planta Genérica de Valores).</small>
       </div>
 
-      <div class="field">
+      <div class="field hidden" id="primeiroImovelBox">
         <label>Condição do comprador</label>
         <div class="segmented">
           <label class="choice">
@@ -72,7 +73,9 @@
             <span>Segundo ou mais</span>
           </label>
         </div>
+        <small>Este campo só é exibido porque o valor informado está até R$ 147.000,00 — é o único caso em que a condição de primeiro imóvel muda o ITBI (Art. 9º da LC 383/09). Acima desse valor, a alíquota é 2% de qualquer forma.</small>
       </div>
+      <p class="hint-block" id="primeiroImovelAviso">A opção de primeiro imóvel só aparece aqui quando o valor da negociação (ou a base de cálculo, se houver referência) for até R$ 147.000,00 — é o único caso em que essa condição muda o valor do ITBI.</p>
 
       <div class="field">
         <label for="sistema">Modalidade da operação</label>
@@ -81,7 +84,7 @@
           <option value="sfh">Financiamento — SFH</option>
           <option value="sfi">Financiamento — SFI</option>
         </select>
-        <small>Na regra municipal consultada, a redução para a parte financiada é prevista para operações enquadradas no SFH.</small>
+        <small>Na regra municipal consultada, a redução para a parte financiada é prevista para operações enquadradas no SFH. Em financiamentos (SFH/SFI), esta regra é aplicada independentemente da condição de "primeiro imóvel".</small>
       </div>
 
       <div class="field hidden" id="financiamentoBox">
@@ -148,12 +151,57 @@
         <strong>Importante:</strong> esta é uma calculadora estimativa. A guia oficial emitida pela Prefeitura é a referência para o recolhimento do imposto. Regras, valores e índices podem ser alterados por legislação ou atualização municipal.
       </div>
     </section>
+
+    <section class="card info-card">
+      <h2>Como o cálculo do Registro do imóvel funciona</h2>
+      <div class="rules">
+        <article>
+          <span>01</span>
+          <div>
+            <h3>Quem define o valor</h3>
+            <p>Diferente do ITBI, o Registro de Imóveis <strong>não é definido pela Prefeitura</strong>. Os emolumentos do Cartório de Registro de Imóveis seguem a <strong>Tabela de Custas e Emolumentos do Estado de São Paulo</strong>, publicada anualmente pela Corregedoria Geral da Justiça/TJSP e divulgada pela ANOREG-SP/ARISP, válida para todos os cartórios do Estado, inclusive os de São José dos Campos.</p>
+          </div>
+        </article>
+        <article>
+          <span>02</span>
+          <div>
+            <h3>Base de cálculo</h3>
+            <p>O valor do registro é obtido por faixas, de acordo com o valor declarado do negócio (o mesmo valor informado no campo "Valor da negociação" ao lado). Diferente do ITBI, aqui <strong>não se soma o valor de referência da Prefeitura</strong>.</p>
+          </div>
+        </article>
+        <article>
+          <span>03</span>
+          <div>
+            <h3>Registro da aquisição</h3>
+            <p>É o emolumento cobrado para registrar a transferência de propriedade na matrícula do imóvel, calculado pela <strong>Tabela II, item 1 ("Registro com valor declarado")</strong>, de acordo com a faixa de valor do imóvel.</p>
+          </div>
+        </article>
+        <article>
+          <span>04</span>
+          <div>
+            <h3>Averbação da garantia (financiamento)</h3>
+            <p>Quando há financiamento (SFH ou SFI), o banco também registra a garantia (alienação fiduciária) sobre o valor financiado. Esse ato é cobrado à parte, pela <strong>Tabela II, item 2 ("Averbação com valor declarado")</strong>, aplicada sobre o valor financiado.</p>
+          </div>
+        </article>
+        <article>
+          <span>05</span>
+          <div>
+            <h3>Sem desconto de "primeiro imóvel"</h3>
+            <p>A redução para primeiro imóvel prevista na lei municipal vale apenas para o ITBI. A tabela estadual de emolumentos do Registro de Imóveis <strong>não prevê</strong> esse mesmo desconto — ela é a mesma para qualquer comprador, salvo casos específicos de habitação de interesse social ou financiamento por programas com União/Estados/Municípios.</p>
+          </div>
+        </article>
+      </div>
+      <div class="notice">
+        <strong>Importante:</strong> valores da Tabela de Emolumentos do Estado de São Paulo para 2026 (Lei Estadual nº 11.331/2002, com atualizações, divulgada pela ANOREG-SP/ARISP). Esta calculadora estima apenas o registro da aquisição e, quando aplicável, a averbação da garantia do financiamento — não inclui ITCMD, escritura pública, certidões avulsas ou outras despesas cartorárias eventuais. Para imóveis com valor acima de R$ 142.154.000,00, ou casos de habitação de interesse social/financiamento por programas públicos, consulte diretamente o Cartório de Registro de Imóveis responsável pela matrícula.
+      </div>
+    </section>
   </main>
 
   <footer>
     <div class="container">
-      <p>Calculadora estimativa de ITBI • São José dos Campos/SP</p>
-      <p>Base normativa informada pela Prefeitura: Lei Complementar nº 383/2009 e regulamentação municipal.</p>
+      <p>Calculadora estimativa de ITBI e Registro de Imóveis • São José dos Campos/SP</p>
+      <p>ITBI — base normativa informada pela Prefeitura: Lei Complementar nº 383/2009 e regulamentação municipal.</p>
+      <p>Registro de Imóveis — Tabela de Custas e Emolumentos do Estado de São Paulo para 2026 (Lei Estadual nº 11.331/2002, com atualizações), divulgada pela ANOREG-SP/ARISP.</p>
     </div>
   </footer>
 
